@@ -21,14 +21,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.room.PrimaryKey
 
 @Composable
-fun AddNoteDialog(shouldShowDialog: MutableState<Boolean>) {
+fun AddNoteDialog(
+    shouldShowDialog: MutableState<Boolean>,
+    viewModel: NoteViewModel
+) {
+    var title by remember { mutableStateOf(TextFieldValue("")) }
+    var note by remember { mutableStateOf(TextFieldValue("")) }
     AlertDialog(
         onDismissRequest = { shouldShowDialog.value = false },
         confirmButton = {
             Button(
                 onClick = {
+                    viewModel.insertNote(Note(title = title.text, note = note.text))
                     shouldShowDialog.value = false
                 }
             ) {
@@ -41,20 +48,20 @@ fun AddNoteDialog(shouldShowDialog: MutableState<Boolean>) {
         title = { Text(text = "Add note") },
         text = {
             Column {
-                var title by remember { mutableStateOf(TextFieldValue("")) }
-                var note by remember { mutableStateOf(TextFieldValue("")) }
                 TextField(value = title, onValueChange = {
                     title = it
                 },
                     label = { Text(text = "Title") },
                     placeholder = { Text(text = "Title") }
                 )
-                TextField(value = note, onValueChange = {
-                                                        note = it
-                },
+                TextField(
+                    value = note, onValueChange = {
+                        note = it
+                    },
                     label = { Text(text = "Note") },
-                    placeholder = { Text(text = "Note")},
-                    modifier = Modifier.height(300.dp)
+                    placeholder = { Text(text = "Note") },
+                    modifier = Modifier
+                        .height(300.dp)
                         .padding(top = 10.dp)
                 )
             }
