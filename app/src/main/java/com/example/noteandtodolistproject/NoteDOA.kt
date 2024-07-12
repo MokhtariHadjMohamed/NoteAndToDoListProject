@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDOA {
+     // TODO Note
      @Insert
      suspend fun insertNote(note :Note)
 
@@ -20,4 +21,17 @@ interface NoteDOA {
 
      @Query("SELECT * FROM Note")
      fun getAllNotes() : Flow<List<Note>>
+
+     // TODO ToDoList
+     @Insert
+     suspend fun insertToDo(toDo :ToDoList)
+
+     @Update
+     suspend fun updateToDo(toDo: ToDoList)
+
+     @Delete
+     suspend fun deleteToDo(toDo: ToDoList)
+
+     @Query("SELECT * FROM ToDoList")
+     fun getAllToDos() : Flow<List<ToDoList>>
 }
