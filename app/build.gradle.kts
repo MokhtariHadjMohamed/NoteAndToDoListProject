@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android") version "2.57.1" apply false
 }
 
 android {
@@ -77,4 +78,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.runtime.livedata)
+
+    // dagger hilt
+    implementation("com.google.dagger:hilt-android:2.57.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.57.1")
 }

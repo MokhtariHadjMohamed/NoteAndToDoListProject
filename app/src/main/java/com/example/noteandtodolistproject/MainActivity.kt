@@ -37,7 +37,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -47,7 +46,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -59,14 +57,15 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.noteandtodolistproject.ui.theme.NoteAndToDoListProjectTheme
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.launch
 
+@HiltAndroidApp
 class MainActivity : ComponentActivity() {
-
     val MIGRATION_1_2 = object : Migration(1, 2) {
-        override fun migrate(database: SupportSQLiteDatabase) {
+        override fun migrate(db: SupportSQLiteDatabase) {
             // Example: Create a new table if needed
-            database.execSQL(
+            db.execSQL(
                 """
             CREATE TABLE IF NOT EXISTS ToDoList (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
